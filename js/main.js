@@ -31,7 +31,7 @@ function showTasksList() {
         const element = String.raw`
 				<li>
 					<div class="task-desc">
-						<input data-id="${task.id}" type="checkbox">
+						<input data-id="${task.id}" type="checkbox" ${task.completed ? "checked" : ""}>
 						<label>${task.text}</label>
 					</div>
 					<div>
@@ -54,6 +54,15 @@ function showTasksList() {
             showUpdateModal(+e.target.dataset.id);
         });
     });
+
+    document
+        .querySelectorAll(`li input[type="checkbox"]`)
+        .forEach((checkbox) => {
+            checkbox.addEventListener("click", (e) => {
+                e.stopPropagation();
+                completeTask(+e.target.dataset.id);
+            });
+        });
 }
 
 // Add new To-Do
@@ -117,6 +126,18 @@ function showUpdateModal(id) {
             modal.style.display = "none";
         }
     };
+}
+
+// Change To-Do State to Completed
+function completeTask(id) {
+    const taskIndex = list.findIndex((t) => t.id == id);
+    const task = list[taskIndex];
+
+    task.completed = !task.completed;
+    list[taskIndex] = task;
+
+    localStorage.setItem("tasks", JSON.stringify(list));
+    showTasksList();
 }
 
 addTaskForm.addEventListener("submit", addTask);
