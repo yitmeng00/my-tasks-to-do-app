@@ -89,13 +89,13 @@ body i {
 }
 
 #to-do-list li .remove,
-#to-do-list li .edit {
+#to-do-list li .update {
     opacity: 0;
     transition: all 0.3s ease;
 }
 
 #to-do-list li:hover .remove,
-#to-do-list li:hover .edit {
+#to-do-list li:hover .update {
     opacity: 1;
 }
 
