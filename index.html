@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MyTasks To-Do App</title>
+        <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+    </head>
+    <body>
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="header-content-start">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </div>
+                <div class="header-content-end">
+                    <div><i class="fa fa-bell-o" aria-hidden="true"></i></div>
+                    <div><i class="fa fa-cog" aria-hidden="true"></i></div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content -->
+        <section>
+            <div>
+                <!-- Add Task -->
+                <div class="add-to-do-typebox">
+                    <form id="add-to-do-form">
+                        <input
+                            id="add-to-do-input"
+                            type="text"
+                            placeholder="&#xf067; Add Task"
+                        />
+                    </form>
+                </div>
+
+                <!-- To-Do List -->
+                <ul id="to-do-list"></ul>
+
+                <!-- Dynamic Modal -->
+                <div id="dynamic-modal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div id="modal-header-title"></div>
+                            <div>
+                                <span class="close-modal-btn">&times;</span>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <input id="modal-to-do-id" type="hidden" />
+                            <input id="modal-to-do-desc" type="text" />
+                        </div>
+                        <div class="modal-footer">
+                            <div id="modal-action-btn" class="button"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
