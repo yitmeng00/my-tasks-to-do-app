@@ -55,6 +55,13 @@ function showTasksList() {
         });
     });
 
+    document.querySelectorAll(`li i.remove`).forEach((item) => {
+        item.addEventListener("click", (e) => {
+            e.stopPropagation();
+            showRemoveModal(+e.target.dataset.id);
+        });
+    });
+
     document
         .querySelectorAll(`li input[type="checkbox"]`)
         .forEach((checkbox) => {
@@ -115,6 +122,35 @@ function showUpdateModal(id) {
     var span = document.getElementsByClassName("close-modal-btn")[0];
     document.getElementById("modal-header-title").innerHTML =
         "Update To-Do Description";
+    document.getElementById("modal-action-btn").innerHTML = "Confirm";
+    modal.style.display = "block";
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+}
+
+function removeTask(id) {
+    list = list.filter((t) => t.id !== id);
+    localStorage.setItem("tasks", JSON.stringify(list));
+    const modal = document.getElementById("dynamic-modal");
+    modal.style.display = "none";
+    showTasksList();
+}
+
+function showRemoveModal(id) {
+    document
+        .querySelector("#modal-action-btn")
+        .addEventListener("click", () => removeTask(+id));
+
+    const modal = document.getElementById("dynamic-modal");
+    var span = document.getElementsByClassName("close-modal-btn")[0];
+    document.getElementById("modal-header-title").innerHTML = "Delete To-Do";
     document.getElementById("modal-action-btn").innerHTML = "Confirm";
     modal.style.display = "block";
     span.onclick = function () {
