@@ -18,11 +18,10 @@ MyTasks to-do app allows you to keep track of your tasks, and mark them as compl
 
 This app includes the following features:
 
-- Add new tasks to your to-do list
-- Mark tasks as complete
-- Edit task names
-- Delete tasks from your list
-- Filter tasks by status (all, active, completed)
+- Add new To-Do to your To-Do List
+- Mark To-Do as Complete
+- Edit To-Do Description
+- Delete To-Do from your list
 
 ## Technologies Used
 
