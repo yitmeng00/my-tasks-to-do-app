@@ -1,6 +1,6 @@
 # MyTasks To-Do Application
 
-MyTasks is a simple to-do app built with HTML, CSS, and JavaScript.
+MyTasks is a Simple To-Do App built with HTML, CSS, and JavaScript.
 
 ## Table of Contents
 
