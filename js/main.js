@@ -88,6 +88,8 @@ function addTask(event) {
     });
     localStorage.setItem("tasks", JSON.stringify(list));
     addTaskInput.value = "";
+
+    showNotification("success", "Task was successfully added");
     showTasksList();
 }
 
@@ -102,6 +104,7 @@ function updateTask(id) {
 
     const modal = document.getElementById("dynamic-modal");
     modal.style.display = "none";
+    showNotification("success", "Updated Successfully.");
     showTasksList();
 }
 
@@ -140,6 +143,7 @@ function removeTask(id) {
     localStorage.setItem("tasks", JSON.stringify(list));
     const modal = document.getElementById("dynamic-modal");
     modal.style.display = "none";
+    showNotification("success", "Deleted Successfully.");
     showTasksList();
 }
 
@@ -174,6 +178,13 @@ function completeTask(id) {
 
     localStorage.setItem("tasks", JSON.stringify(list));
     showTasksList();
+}
+
+function showNotification(type, text) {
+    var notyf = new Notyf();
+    if (type == "success") {
+        notyf.success(text);
+    }
 }
 
 addTaskForm.addEventListener("submit", addTask);
