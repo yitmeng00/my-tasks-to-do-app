@@ -26,7 +26,7 @@ function renderToDosList() {
     }
 
     tasksList.style.border = "1px solid rgba(34,36,38,.15)";
-    toDoList.reverse().forEach((task) => {
+    toDoList.forEach((task) => {
         const taskElement = createToDoElement(task);
         tasksList.appendChild(taskElement);
     });
@@ -78,11 +78,11 @@ function addToDo(event) {
     }
 
     const newTask = {
-        id: toDoList.length > 0 ? toDoList[toDoList.length - 1].id + 1 : 1,
+        id: toDoList.length > 0 ? toDoList[0].id + 1 : 1,
         text: taskText,
         completed: false,
     };
-    toDoList.push(newTask);
+    toDoList.unshift(newTask);
     localStorage.setItem("todos", JSON.stringify(toDoList));
     addTaskInput.value = "";
 
