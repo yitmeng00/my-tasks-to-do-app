@@ -1,16 +1,16 @@
+// Selectors
 const tasksList = document.querySelector("#to-do-list");
 const addTaskForm = document.querySelector("form#add-to-do-form");
 const addTaskInput = document.querySelector("#add-to-do-input");
 
 // List Of To-Dos
-let list = JSON.parse(localStorage.getItem("tasks")) || [];
+let toDoList = JSON.parse(localStorage.getItem("tasks")) || [];
 
 // Display All To-Do
 function showTasksList() {
     tasksList.innerHTML = "";
-    const list = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    if (list.length === 0) {
+    if (toDoList.length === 0) {
         const element = String.raw`
 			<div class="no-task-content">
                 <div>
@@ -27,7 +27,7 @@ function showTasksList() {
     }
 
     tasksList.style.border = "1px solid rgba(34,36,38,.15)";
-    list.reverse().forEach((task) => {
+    toDoList.reverse().forEach((task) => {
         const element = String.raw`
 				<li>
 					<div class="task-desc">
@@ -81,12 +81,12 @@ function addTask(event) {
         return (addTaskInput.value = "");
     }
 
-    list.push({
-        id: list.length + 1,
+    toDoList.push({
+        id: toDoList.length + 1,
         text: taskText,
         completed: false,
     });
-    localStorage.setItem("tasks", JSON.stringify(list));
+    localStorage.setItem("tasks", JSON.stringify(toDoList));
     addTaskInput.value = "";
 
     showNotification("success", "Task was successfully added");
@@ -97,10 +97,10 @@ function updateTask(id) {
     const taskText = document.querySelector("#modal-to-do-desc").value;
 
     if (taskText.trim().length === 0) return;
-    const taskIndex = list.findIndex((t) => t.id == id);
+    const taskIndex = toDoList.findIndex((t) => t.id == id);
 
-    list[taskIndex].text = taskText;
-    localStorage.setItem("tasks", JSON.stringify(list));
+    toDoList[taskIndex].text = taskText;
+    localStorage.setItem("tasks", JSON.stringify(toDoList));
 
     const modal = document.getElementById("dynamic-modal");
     modal.style.display = "none";
@@ -109,8 +109,8 @@ function updateTask(id) {
 }
 
 function showUpdateModal(id) {
-    const taskIndex = list.findIndex((t) => t.id == id);
-    const { text } = list[taskIndex];
+    const taskIndex = toDoList.findIndex((t) => t.id == id);
+    const { text } = toDoList[taskIndex];
 
     document.querySelector("#dynamic-modal .modal-body #modal-to-do-id").value =
         id;
@@ -139,8 +139,8 @@ function showUpdateModal(id) {
 }
 
 function removeTask(id) {
-    list = list.filter((t) => t.id !== id);
-    localStorage.setItem("tasks", JSON.stringify(list));
+    toDoList = toDoList.filter((t) => t.id !== id);
+    localStorage.setItem("tasks", JSON.stringify(toDoList));
     const modal = document.getElementById("dynamic-modal");
     modal.style.display = "none";
     showNotification("success", "Deleted Successfully.");
@@ -170,13 +170,13 @@ function showRemoveModal(id) {
 
 // Change To-Do State to Completed
 function completeTask(id) {
-    const taskIndex = list.findIndex((t) => t.id == id);
-    const task = list[taskIndex];
+    const taskIndex = toDoList.findIndex((t) => t.id == id);
+    const task = toDoList[taskIndex];
 
     task.completed = !task.completed;
-    list[taskIndex] = task;
+    toDoList[taskIndex] = task;
 
-    localStorage.setItem("tasks", JSON.stringify(list));
+    localStorage.setItem("tasks", JSON.stringify(toDoList));
     showTasksList();
 }
 
