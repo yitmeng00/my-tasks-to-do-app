@@ -88,18 +88,29 @@ body i {
     align-self: center;
 }
 
-#to-do-list li .remove,
-#to-do-list li .update {
+#to-do-list li .delete-button,
+#to-do-list li .update-button {
     opacity: 0;
     transition: all 0.3s ease;
+    border: none;
+    background-color: transparent;
+    margin: 0em 0.3em;
 }
 
-#to-do-list li:hover .remove,
-#to-do-list li:hover .update {
+#to-do-list li:hover .delete-button,
+#to-do-list li:hover .update-button {
     opacity: 1;
 }
 
-#to-do-list li i {
+#to-do-list li .update-button i {
+    color: var(--tertiary);
+}
+
+#to-do-list li .delete-button i{
+    color: red;
+}
+
+#to-do-list li button {
     cursor: pointer !important;
 }
 

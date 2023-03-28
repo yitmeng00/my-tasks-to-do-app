@@ -4,14 +4,13 @@ const addTaskForm = document.querySelector("form#add-to-do-form");
 const addTaskInput = document.querySelector("#add-to-do-input");
 
 // List Of To-Dos
-const toDoList = JSON.parse(localStorage.getItem("tasks")) || [];
+let toDoList = JSON.parse(localStorage.getItem("todos")) || [];
 
 // Display All To-Do
-function showTasksList() {
+function renderToDosList() {
     tasksList.innerHTML = "";
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    if (tasks.length === 0) {
+    if (toDoList.length === 0) {
         tasksList.style.border = "none";
         tasksList.innerHTML = `
             <div class="no-task-content">
@@ -27,102 +26,106 @@ function showTasksList() {
     }
 
     tasksList.style.border = "1px solid rgba(34,36,38,.15)";
-    tasks.reverse().forEach((task) => {
-        const taskElement = document.createElement("li");
-        taskElement.innerHTML = `
-            <div class="task-desc">
-                <input data-id="${task.id}" type="checkbox" ${task.completed ? 'checked' : ''}>
-                <label>${task.text}</label>
-            </div>
-            <div>
-                <i data-id="${task.id}" class="fa fa-pencil-square-o update" aria-hidden="true"></i>
-                <i data-id="${task.id}" class="fa fa-trash remove" aria-hidden="true"></i>
-            </div>
-        `;
+    toDoList.reverse().forEach((task) => {
+        const taskElement = createToDoElement(task);
         tasksList.appendChild(taskElement);
     });
 
-    document.querySelectorAll(`li i.update`).forEach((item) => {
-        item.addEventListener("click", (e) => {
-            e.stopPropagation();
-            showUpdateModal(+e.target.dataset.id);
+    [...document.getElementsByClassName("update-button")].forEach((updateButton) => {
+        updateButton.addEventListener("click", function () {
+            const taskId = this.getAttribute("data-id");
+            showUpdateModal(taskId);
         });
     });
 
-    document.querySelectorAll(`li i.remove`).forEach((item) => {
-        item.addEventListener("click", (e) => {
-            e.stopPropagation();
-            showRemoveModal(+e.target.dataset.id);
+    [...document.getElementsByClassName("delete-button")].forEach((deleteButton) => {
+        deleteButton.addEventListener("click", function () {
+            const taskId = this.getAttribute("data-id");
+            showRemoveModal(taskId);
         });
     });
 
-    document
-        .querySelectorAll(`li input[type="checkbox"]`)
-        .forEach((checkbox) => {
-            checkbox.addEventListener("click", (e) => {
-                e.stopPropagation();
-                completeTask(+e.target.dataset.id);
-            });
+    [...document.getElementsByClassName("to-do-complete-checkbox")].forEach((completeCheckBox) => {
+        completeCheckBox.addEventListener("click", function () {
+            const taskId = this.getAttribute("data-id");
+            completeToDo(taskId);
         });
+    });
+}
+
+function createToDoElement(task) {
+    const taskElement = document.createElement("li");
+    taskElement.innerHTML = `
+      <div class="task-desc">
+        <input data-id="${task.id}" class="to-do-complete-checkbox" type="checkbox" ${task.completed ? 'checked' : ''}>
+        <label>${task.text}</label>
+      </div>
+      <div>
+        <button data-id="${task.id}" class="update-button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+        <button data-id="${task.id}" class="delete-button"><i class="fa fa-trash" aria-hidden="true"></i></button>
+      </div>
+    `;
+    return taskElement;
 }
 
 // Add new To-Do
-function addTask(event) {
+function addToDo(event) {
     event.preventDefault();
 
-    const taskText = addTaskInput.value;
-    if (taskText.trim().length === 0) {
-        return (addTaskInput.value = "");
+    const taskText = addTaskInput.value.trim();
+    if (taskText.length === 0) {
+        return;
     }
 
-    toDoList.push({
-        id: toDoList.length + 1,
+    const newTask = {
+        id: toDoList.length > 0 ? toDoList[toDoList.length - 1].id + 1 : 1,
         text: taskText,
         completed: false,
-    });
-    localStorage.setItem("tasks", JSON.stringify(toDoList));
+    };
+    toDoList.push(newTask);
+    localStorage.setItem("todos", JSON.stringify(toDoList));
     addTaskInput.value = "";
 
     showNotification("success", "Task was successfully added");
-    showTasksList();
+    renderToDosList();
 }
 
 // Update To-Do Description
-function updateTask(id) {
+function updateToDo(id) {
     const taskText = document.querySelector("#modal-to-do-desc").value;
 
     if (taskText.trim().length === 0) return;
     const taskIndex = toDoList.findIndex((t) => t.id == id);
 
     toDoList[taskIndex].text = taskText;
-    localStorage.setItem("tasks", JSON.stringify(toDoList));
+    localStorage.setItem("todos", JSON.stringify(toDoList));
 
     const modal = document.getElementById("dynamic-modal");
     modal.style.display = "none";
     showNotification("success", "Updated Successfully.");
-    showTasksList();
+    renderToDosList();
 }
 
 // Delete To-Do
-function removeTask(id) {
+function deleteToDo(id) {
     toDoList = toDoList.filter((t) => t.id !== id);
-    localStorage.setItem("tasks", JSON.stringify(toDoList));
+    localStorage.setItem("todos", JSON.stringify(toDoList));
     const modal = document.getElementById("dynamic-modal");
     modal.style.display = "none";
     showNotification("success", "Deleted Successfully.");
-    showTasksList();
+    renderToDosList();
 }
 
 // Change To-Do State to Completed
-function completeTask(id) {
+function completeToDo(id) {
     const taskIndex = toDoList.findIndex((t) => t.id == id);
     const task = toDoList[taskIndex];
 
     task.completed = !task.completed;
     toDoList[taskIndex] = task;
 
-    localStorage.setItem("tasks", JSON.stringify(toDoList));
-    showTasksList();
+    localStorage.setItem("todos", JSON.stringify(toDoList));
+    renderToDosList();
 }
 
 function showModal(headerTitle, actionBtnText, actionFn) {
@@ -151,11 +154,11 @@ function showUpdateModal(id) {
     document.querySelector("#dynamic-modal .modal-body #modal-to-do-id").value = id;
     document.querySelector("#dynamic-modal .modal-body #modal-to-do-desc").value = text.trim();
 
-    showModal("Update To-Do Description", "Confirm", () => updateTask(+id));
+    showModal("Update To-Do Description", "Confirm", () => updateToDo(+id));
 }
 
 function showRemoveModal(id) {
-    showModal("Delete To-Do", "Confirm", () => removeTask(+id));
+    showModal("Delete To-Do", "Confirm", () => deleteToDo(+id));
 }
 
 function showNotification(type, text) {
@@ -165,5 +168,5 @@ function showNotification(type, text) {
     }
 }
 
-addTaskForm.addEventListener("submit", addTask);
-showTasksList();
+addTaskForm.addEventListener("submit", addToDo);
+renderToDosList();
