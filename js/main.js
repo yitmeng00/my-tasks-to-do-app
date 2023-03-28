@@ -4,48 +4,42 @@ const addTaskForm = document.querySelector("form#add-to-do-form");
 const addTaskInput = document.querySelector("#add-to-do-input");
 
 // List Of To-Dos
-let toDoList = JSON.parse(localStorage.getItem("tasks")) || [];
+const toDoList = JSON.parse(localStorage.getItem("tasks")) || [];
 
 // Display All To-Do
 function showTasksList() {
     tasksList.innerHTML = "";
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    if (toDoList.length === 0) {
-        const element = String.raw`
-			<div class="no-task-content">
-                <div>
-                    <img src="assets/images/no-task-vector.png" alt="No Task">
-                </div>
-				<div>
-					<p>You have no tasks today!</p>
-				</div>
-			</div>
-		`;
-
+    if (tasks.length === 0) {
         tasksList.style.border = "none";
-        return tasksList.insertAdjacentHTML("beforeend", element);
+        tasksList.innerHTML = `
+            <div class="no-task-content">
+                <div>
+                <img src="assets/images/no-task-vector.png" alt="No Task">
+                </div>
+                <div>
+                <p>You have no tasks today!</p>
+                </div>
+            </div>
+            `;
+        return;
     }
 
     tasksList.style.border = "1px solid rgba(34,36,38,.15)";
-    toDoList.reverse().forEach((task) => {
-        const element = String.raw`
-				<li>
-					<div class="task-desc">
-						<input data-id="${task.id}" type="checkbox" ${task.completed ? "checked" : ""}>
-						<label>${task.text}</label>
-					</div>
-					<div>
-						<i data-id="${
-                            task.id
-                        }" id="to-do-update-btn" class="fa fa-pencil-square-o update" aria-hidden="true"></i>
-						<i data-id="${
-                            task.id
-                        }" id="to-do-delete-btn" class="fa fa-trash remove" aria-hidden="true"></i>
-					</div>
-				</li>
-			`;
-
-        tasksList.insertAdjacentHTML("beforeend", element);
+    tasks.reverse().forEach((task) => {
+        const taskElement = document.createElement("li");
+        taskElement.innerHTML = `
+            <div class="task-desc">
+                <input data-id="${task.id}" type="checkbox" ${task.completed ? 'checked' : ''}>
+                <label>${task.text}</label>
+            </div>
+            <div>
+                <i data-id="${task.id}" class="fa fa-pencil-square-o update" aria-hidden="true"></i>
+                <i data-id="${task.id}" class="fa fa-trash remove" aria-hidden="true"></i>
+            </div>
+        `;
+        tasksList.appendChild(taskElement);
     });
 
     document.querySelectorAll(`li i.update`).forEach((item) => {
@@ -93,6 +87,7 @@ function addTask(event) {
     showTasksList();
 }
 
+// Update To-Do Description
 function updateTask(id) {
     const taskText = document.querySelector("#modal-to-do-desc").value;
 
@@ -108,36 +103,7 @@ function updateTask(id) {
     showTasksList();
 }
 
-function showUpdateModal(id) {
-    const taskIndex = toDoList.findIndex((t) => t.id == id);
-    const { text } = toDoList[taskIndex];
-
-    document.querySelector("#dynamic-modal .modal-body #modal-to-do-id").value =
-        id;
-    document.querySelector(
-        "#dynamic-modal .modal-body #modal-to-do-desc"
-    ).value = text.trim();
-    document
-        .querySelector("#modal-action-btn")
-        .addEventListener("click", () => updateTask(+id));
-
-    const modal = document.getElementById("dynamic-modal");
-    var span = document.getElementsByClassName("close-modal-btn")[0];
-    document.getElementById("modal-header-title").innerHTML =
-        "Update To-Do Description";
-    document.getElementById("modal-action-btn").innerHTML = "Confirm";
-    modal.style.display = "block";
-    span.onclick = function () {
-        modal.style.display = "none";
-    };
-
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    };
-}
-
+// Delete To-Do
 function removeTask(id) {
     toDoList = toDoList.filter((t) => t.id !== id);
     localStorage.setItem("tasks", JSON.stringify(toDoList));
@@ -145,27 +111,6 @@ function removeTask(id) {
     modal.style.display = "none";
     showNotification("success", "Deleted Successfully.");
     showTasksList();
-}
-
-function showRemoveModal(id) {
-    document
-        .querySelector("#modal-action-btn")
-        .addEventListener("click", () => removeTask(+id));
-
-    const modal = document.getElementById("dynamic-modal");
-    var span = document.getElementsByClassName("close-modal-btn")[0];
-    document.getElementById("modal-header-title").innerHTML = "Delete To-Do";
-    document.getElementById("modal-action-btn").innerHTML = "Confirm";
-    modal.style.display = "block";
-    span.onclick = function () {
-        modal.style.display = "none";
-    };
-
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    };
 }
 
 // Change To-Do State to Completed
@@ -180,8 +125,41 @@ function completeTask(id) {
     showTasksList();
 }
 
+function showModal(headerTitle, actionBtnText, actionFn) {
+    document.querySelector("#modal-action-btn").addEventListener("click", actionFn);
+
+    const modal = document.getElementById("dynamic-modal");
+    var span = document.getElementsByClassName("close-modal-btn")[0];
+    document.getElementById("modal-header-title").innerHTML = headerTitle;
+    document.getElementById("modal-action-btn").innerHTML = actionBtnText;
+    modal.style.display = "block";
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+}
+
+function showUpdateModal(id) {
+    const taskIndex = toDoList.findIndex((t) => t.id == id);
+    const { text } = toDoList[taskIndex];
+
+    document.querySelector("#dynamic-modal .modal-body #modal-to-do-id").value = id;
+    document.querySelector("#dynamic-modal .modal-body #modal-to-do-desc").value = text.trim();
+
+    showModal("Update To-Do Description", "Confirm", () => updateTask(+id));
+}
+
+function showRemoveModal(id) {
+    showModal("Delete To-Do", "Confirm", () => removeTask(+id));
+}
+
 function showNotification(type, text) {
-    var notyf = new Notyf();
+    const notyf = new Notyf();
     if (type == "success") {
         notyf.success(text);
     }
