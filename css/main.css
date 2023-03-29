@@ -21,101 +21,114 @@ body i {
 }
 
 /* Header */
-.main-header {
+header.main-header {
     background-color: var(--secondary);
 }
 
-.header-content {
+header .header-content {
     display: flex;
     padding: 1em 1.5em;
     justify-content: space-between;
 }
 
-.header-content-end {
+header .header-content-end {
     display: flex;
 }
 
-.header-content-end div {
+header .header-content-end div {
     margin: 0em 0.75em;
 }
 
 /* Main Content */
-.add-to-do-typebox {
+main .todo__new-input-container {
     margin: 1em 0em;
     text-align: center;
 }
 
-#add-to-do-form {
+main form#todo__new-input-form {
     width: 100%;
     border: none;
 }
 
-#add-to-do-form input[type="text"] {
+main form#todo__new-input-form input[type="text"] {
     font-family: Arial, FontAwesome;
+    font-size: 1em;
     width: 60%;
+    margin-top: 1em;
     padding: 0.5em;
-    border: 1px solid var(--primary);
-}
-
-#add-to-do-form input[type="text"]:focus {
+    border: none;
+    border-bottom: 1px solid var(--primary) !important;
     outline: none;
 }
 
-.empty-todo-content {
-    text-align: center;
-}
-
-.empty-todo-content img {
-    height: 20em;
-    width: 20em;
-}
-
 /* To-Do List */
-#to-do-list {
-    margin: 0 auto;
-    width: 60%;
-    list-style: none;
-}
-
-#to-do-list li {
+#todo__list li {
     display: flex;
     justify-content: space-between;
     padding: 0.5em;
     border: 1px solid var(--primary);
 }
 
-.todo-desc-container {
-    align-self: center;
-}
-
-#to-do-list li .delete-button,
-#to-do-list li .update-button {
+#todo__list li .todo__delete-button,
+#todo__list li .todo__edit-button {
     opacity: 0;
     transition: all 0.3s ease;
     border: none;
     background-color: transparent;
     margin: 0em 0.3em;
+    cursor: pointer;
 }
 
-#to-do-list li:hover .delete-button,
-#to-do-list li:hover .update-button {
+#todo__list li:hover .todo__delete-button,
+#todo__list li:hover .todo__edit-button {
     opacity: 1;
 }
 
-#to-do-list li .update-button i {
+#todo__list li .todo__edit-button i {
     color: var(--tertiary);
 }
 
-#to-do-list li .delete-button i {
+#todo__list li .todo__delete-button i {
     color: red;
 }
 
-#to-do-list li button {
-    cursor: pointer !important;
+/* Customise checkbox */
+#todo__list input[type="checkbox"]#todo__completed-checkbox {
+    appearance: none;
+    background-color: white;
+    margin: 0;
+    width: 1.2em;
+    height: 1.2em;
+    border: 0.1em solid black;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}
+
+#todo__list input[type="checkbox"]#todo__completed-checkbox::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--primary);
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+#todo__list input[type="checkbox"]#todo__completed-checkbox:checked::before {
+    transform: scale(1);
+}
+
+#todo__list input[type="checkbox"]#todo__completed-checkbox:focus {
+    outline: max(2px, 0.1em) solid var(--secondary);
+    outline-offset: max(2px, 0.15em);
 }
 
 /* Modal */
-.modal {
+#todo__dynamic-modal.modal {
     display: none;
     position: fixed;
     z-index: 1;
@@ -129,7 +142,7 @@ body i {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+#todo__dynamic-modal .modal-content {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -143,47 +156,47 @@ body i {
     animation-duration: 0.4s;
 }
 
-.modal-header {
+#todo__dynamic-modal .modal-header {
     display: flex;
     justify-content: space-between;
     padding: 1em;
     border-bottom: 1px solid black;
 }
 
-#modal-header-title {
+#todo__dynamic-modal #modal-header-title {
     align-self: center;
     font-size: 1.5em;
 }
 
-.close-modal-btn {
+#todo__dynamic-modal .close-modal-btn {
     font-size: 2em;
     font-weight: bold;
 }
 
-.close-modal-btn:hover,
-.close-modal-btn:focus {
+#todo__dynamic-modal .close-modal-btn:hover,
+#todo__dynamic-modal .close-modal-btn:focus {
     color: var(--primary);
     text-decoration: none;
     cursor: pointer;
 }
 
-.modal-body {
+#todo__dynamic-modal .modal-body {
     padding: 1em;
 }
 
-.modal-body input[type="text"]#modal-to-do-desc {
+#todo__dynamic-modal .modal-body input[type="text"]#modal__todo-desc {
     padding: 0.5em;
     width: 100%;
     border-color: var(--primary);
     outline: none;
 }
 
-.modal-footer {
+#todo__dynamic-modal .modal-footer {
     padding: 1em;
     text-align: end;
 }
 
-.modal-footer #modal-action-btn {
+#todo__dynamic-modal .modal-footer #modal-action-btn {
     padding: 0.5em;
     background-color: var(--secondary);
     width: 20%;
@@ -191,8 +204,8 @@ body i {
     cursor: pointer;
 }
 
-.modal-footer #modal-action-btn:hover,
-.modal-footer #modal-action-btn:focus {
+#todo__dynamic-modal .modal-footer #modal-action-btn:hover,
+#todo__dynamic-modal .modal-footer #modal-action-btn:focus {
     background-color: var(--primary);
 }
 
