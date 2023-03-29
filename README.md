@@ -1,6 +1,6 @@
 # MyTasks To-Do Application
 
-MyTasks is a Simple To-Do App built with HTML, CSS, and JavaScript.
+MyTasks is a Simple To-Do App built with HTML, CSS, and VanillaJS.
 
 ## Table of Contents
 
@@ -18,10 +18,10 @@ MyTasks to-do app allows you to keep track of your tasks, and mark them as compl
 
 This app includes the following features:
 
-- Add new To-Do to your To-Do List
-- Mark To-Do as Complete
-- Edit To-Do Description
-- Delete To-Do from your list
+- Add new To-Do to your todo list
+- Mark To-Do as complete
+- Edit To-Do description
+- Delete To-Do from your todo list
 
 ## Technologies Used
 
@@ -29,7 +29,7 @@ This app was built using the following technologies:
 
 - HTML
 - CSS
-- JavaScript
+- VanillaJS
 
 ## Installation
 
