@@ -5,6 +5,7 @@ const addTaskInput = document.querySelector("#add-to-do-input");
 
 // List Of To-Dos
 let toDoList = JSON.parse(localStorage.getItem("todos")) || [];
+let modalTaskId;
 
 // Display All To-Do
 function renderToDosList() {
@@ -95,7 +96,7 @@ function updateToDo(id) {
     const taskText = document.querySelector("#modal-to-do-desc").value;
 
     if (taskText.trim().length === 0) return;
-    const taskIndex = toDoList.findIndex((t) => t.id == id);
+    const taskIndex = toDoList.findIndex((t) => t.id == modalTaskId);
 
     toDoList[taskIndex].text = taskText;
     localStorage.setItem("todos", JSON.stringify(toDoList));
@@ -151,6 +152,8 @@ function showUpdateModal(id) {
     const taskIndex = toDoList.findIndex((t) => t.id == id);
     const { text } = toDoList[taskIndex];
 
+    modalTaskId = id; // store the id of the task being edited
+    
     document.querySelector("#dynamic-modal .modal-body #modal-to-do-id").value = id;
     document.querySelector("#dynamic-modal .modal-body #modal-to-do-desc").value = text.trim();
 
