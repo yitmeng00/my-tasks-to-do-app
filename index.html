@@ -6,15 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>MyTasks To-Do App</title>
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
+        <!-- CSS and JS File -->
         <link rel="stylesheet" href="css/main.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
         <script type="text/javascript" src="js/main.js?v=1.0.0" defer></script>
+        <!-- Libraries -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        
     </head>
     <body>
         <!-- Main Header -->
@@ -30,22 +30,18 @@
             </div>
         </header>
         <!-- Main Content -->
-        <section>
-            <div>
+        <main>
+            <section>
                 <!-- Add To-Do -->
                 <div class="add-to-do-typebox">
                     <form id="add-to-do-form">
-                        <input
-                            id="add-to-do-input"
-                            type="text"
-                            placeholder="&#xf067; Add To-Do"
-                        />
+                        <input id="add-to-do-input" type="text" placeholder="&#xf067; Add To-Do" />
                     </form>
                 </div>
 
                 <!-- To-Do List -->
                 <ul id="to-do-list"></ul>
-            </div>
-        </section>
+            </section>
+        </main>
     </body>
 </html>

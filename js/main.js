@@ -1,151 +1,159 @@
 // Selectors
-const tasksList = document.querySelector("#to-do-list");
-const addTaskForm = document.querySelector("form#add-to-do-form");
-const addTaskInput = document.querySelector("#add-to-do-input");
+const toDoListContainer = document.querySelector("#to-do-list");
+const addToDoFormElement = document.querySelector("form#add-to-do-form");
+const newToDoInput = document.querySelector("#add-to-do-input");
 
-// List Of To-Dos
+// List of todos
 let toDoList = JSON.parse(localStorage.getItem("todos")) || [];
-let modalTaskId;
 
-// Display All To-Do
+// Display todo list
 function renderToDosList() {
-    tasksList.innerHTML = "";
+    toDoListContainer.innerHTML = "";
 
+    // if no todo
     if (toDoList.length === 0) {
-        tasksList.style.border = "none";
-        tasksList.innerHTML = `
-            <div class="no-task-content">
+        toDoListContainer.style.border = "none";
+        toDoListContainer.innerHTML = `
+            <div class="empty-todo-content">
                 <div>
-                <img src="assets/images/no-task-vector.png" alt="No Task">
+                    <img src="assets/images/offday.png" alt="Off Day">
                 </div>
                 <div>
-                <p>You have no tasks today!</p>
+                    <p>You have no todos today!</p>
                 </div>
             </div>
             `;
         return;
     }
 
-    tasksList.style.border = "1px solid rgba(34,36,38,.15)";
-    toDoList.forEach((task) => {
-        const taskElement = createToDoElement(task);
-        tasksList.appendChild(taskElement);
+    // else render all todo
+    toDoListContainer.style.border = "1px solid rgba(34,36,38,.15)";
+    toDoList.forEach((todo) => {
+        const toDoElement = createToDoElement(todo);
+        toDoListContainer.appendChild(toDoElement);
     });
 
+    // add click event to update button
     [...document.getElementsByClassName("update-button")].forEach((updateButton) => {
         updateButton.addEventListener("click", function () {
-            const taskId = this.getAttribute("data-id");
-            const taskIndex = toDoList.findIndex((t) => t.id == taskId);
-            const { text } = toDoList[taskIndex];
-
-            modalTaskId = taskId; // store the id of the task being edited
+            const toDoId = this.getAttribute("data-id");
+            const toDoIndex = toDoList.findIndex((t) => t.id == toDoId);
+            const { desc } = toDoList[toDoIndex];
             
             renderModal();
             const modalBody = document.querySelector("#dynamic-modal .modal-body");
             modalBody.innerHTML = `
-            <input id="modal-to-do-id" type="hidden" value="${taskId}">
-            <input id="modal-to-do-desc" type="text" value="${text.trim()}">
+            <input id="modal-to-do-id" type="hidden" value="${toDoId}">
+            <input id="modal-to-do-desc" type="text" value="${desc.trim()}">
             `;
 
-            openModal("Update To-Do Description", "Confirm", () => updateToDo());
+            openModal("Update To-Do Description", "Confirm", () => updateToDo(+toDoId));
         });
     });
 
+    // add click event to delete button
     [...document.getElementsByClassName("delete-button")].forEach((deleteButton) => {
         deleteButton.addEventListener("click", function () {
-            const taskId = this.getAttribute("data-id");
+            const toDoId = this.getAttribute("data-id");
             renderModal();
-            openModal("Delete To-Do", "Confirm", () => deleteToDo(+taskId));
+            openModal("Delete To-Do", "Confirm", () => deleteToDo(+toDoId));
         });
     });
 
+    // add click event to complete checkbox
     [...document.getElementsByClassName("to-do-complete-checkbox")].forEach((completeCheckBox) => {
         completeCheckBox.addEventListener("click", function () {
-            const taskId = this.getAttribute("data-id");
-            completeToDo(taskId);
+            const toDoId = this.getAttribute("data-id");
+            completeToDo(toDoId);
         });
     });
 }
 
-function createToDoElement(task) {
-    const taskElement = document.createElement("li");
-    taskElement.innerHTML = `
-      <div class="task-desc">
-        <input data-id="${task.id}" class="to-do-complete-checkbox" type="checkbox" ${task.completed ? 'checked' : ''}>
-        <label>${task.text}</label>
-      </div>
-      <div>
-        <button data-id="${task.id}" class="update-button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-        <button data-id="${task.id}" class="delete-button"><i class="fa fa-trash" aria-hidden="true"></i></button>
-      </div>
+// Create each todo element
+function createToDoElement(todo) {
+    const toDoElement = document.createElement("li");
+    toDoElement.innerHTML = `
+        <div class="todo-desc-container">
+            <input data-id="${todo.id}" class="to-do-complete-checkbox" type="checkbox" ${todo.completed ? 'checked' : ''}>
+            <label>${todo.desc}</label>
+        </div>
+        <div>
+            <button data-id="${todo.id}" class="update-button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+            <button data-id="${todo.id}" class="delete-button"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        </div>
     `;
-    return taskElement;
+    return toDoElement;
 }
 
-// Add new To-Do
+// Add new todo
 function addToDo(event) {
     event.preventDefault();
 
-    const taskText = addTaskInput.value.trim();
-    if (taskText.length === 0) {
+    // check if it is empty on the new todo input
+    const toDoDesc = newToDoInput.value.trim();
+    if (toDoDesc.length === 0) {
         return;
     }
 
-    const newTask = {
+    // new todo object
+    const newToDo = {
         id: toDoList.length > 0 ? toDoList[0].id + 1 : 1,
-        text: taskText,
+        desc: toDoDesc,
         completed: false,
     };
-    toDoList.unshift(newTask);
+    // insert at the begining of the array
+    toDoList.unshift(newToDo);
     localStorage.setItem("todos", JSON.stringify(toDoList));
-    addTaskInput.value = "";
+    newToDoInput.value = "";
 
-    showNotification("success", "Task was successfully added");
+    showNotification("success", "New todo was added successfully!");
     renderToDosList();
 }
 
-// Update To-Do Description
-function updateToDo() {
-    const taskText = document.querySelector("#modal-to-do-desc").value;
+// Update todo description
+function updateToDo(id) {
+    const toDoDesc = document.querySelector("#modal-to-do-desc").value;
 
-    if (taskText.trim().length === 0) return;
-    const taskIndex = toDoList.findIndex((t) => t.id == modalTaskId);
+    if (toDoDesc.trim().length === 0) return;
+    const toDoIndex = toDoList.findIndex((t) => t.id == id);
 
-    toDoList[taskIndex].text = taskText;
+    toDoList[toDoIndex].desc = toDoDesc;
     localStorage.setItem("todos", JSON.stringify(toDoList));
 
     const modal = document.getElementById("dynamic-modal");
     modal.style.display = "none";
+    modal.remove();
+
     showNotification("success", "Updated Successfully.");
     renderToDosList();
-    const dynamicModal = document.querySelector("#dynamic-modal");
-    dynamicModal.remove();
 }
 
-// Delete To-Do
+// Delete todo
 function deleteToDo(id) {
     toDoList = toDoList.filter((t) => t.id !== id);
     localStorage.setItem("todos", JSON.stringify(toDoList));
+
     const modal = document.getElementById("dynamic-modal");
     modal.style.display = "none";
+    modal.remove();
+
     showNotification("success", "Deleted Successfully.");
     renderToDosList();
-    const dynamicModal = document.querySelector("#dynamic-modal");
-    dynamicModal.remove();
 }
 
-// Change To-Do State to Completed
+// Mark todo as completed
 function completeToDo(id) {
-    const taskIndex = toDoList.findIndex((t) => t.id == id);
-    const task = toDoList[taskIndex];
+    const toDoIndex = toDoList.findIndex((t) => t.id == id);
+    const toDo = toDoList[toDoIndex];
 
-    task.completed = !task.completed;
-    toDoList[taskIndex] = task;
-
+    toDo.completed = !toDo.completed;
+    toDoList[toDoIndex] = toDo;
     localStorage.setItem("todos", JSON.stringify(toDoList));
+
     renderToDosList();
 }
 
+// trigger modal to display
 function openModal(headerTitle, actionBtnText, actionFn) {
     document.querySelector("#modal-action-btn").addEventListener("click", actionFn);
 
@@ -153,29 +161,22 @@ function openModal(headerTitle, actionBtnText, actionFn) {
     var span = document.getElementsByClassName("close-modal-btn")[0];
     document.getElementById("modal-header-title").innerHTML = headerTitle;
     document.getElementById("modal-action-btn").innerHTML = actionBtnText;
+
     modal.style.display = "block";
     span.onclick = function () {
         modal.style.display = "none";
-        const dynamicModal = document.querySelector("#dynamic-modal");
-        dynamicModal.remove();
+        modal.remove();
     };
 
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
-            const dynamicModal = document.querySelector("#dynamic-modal");
-            dynamicModal.remove();
+            modal.remove();
         }
     };
 }
 
-function showNotification(type, text) {
-    const notyf = new Notyf();
-    if (type == "success") {
-        notyf.success(text);
-    }
-}
-
+// render modal
 function renderModal() {
     const modalContainer = document.createElement("DIV");
     modalContainer.setAttribute('id', "dynamic-modal");
@@ -208,5 +209,13 @@ function renderModal() {
     document.body.appendChild(modalContainer);
 }
 
-addTaskForm.addEventListener("submit", addToDo);
+// notification object
+function showNotification(type, text) {
+    const notyf = new Notyf();
+    if (type == "success") {
+        notyf.success(text);
+    }
+}
+
+addToDoFormElement.addEventListener("submit", addToDo);
 renderToDosList();

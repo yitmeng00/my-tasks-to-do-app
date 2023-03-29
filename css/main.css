@@ -61,11 +61,11 @@ body i {
     outline: none;
 }
 
-.no-task-content {
+.empty-todo-content {
     text-align: center;
 }
 
-.no-task-content img {
+.empty-todo-content img {
     height: 20em;
     width: 20em;
 }
@@ -84,7 +84,7 @@ body i {
     border: 1px solid var(--primary);
 }
 
-.task-desc {
+.todo-desc-container {
     align-self: center;
 }
 
@@ -106,7 +106,7 @@ body i {
     color: var(--tertiary);
 }
 
-#to-do-list li .delete-button i{
+#to-do-list li .delete-button i {
     color: red;
 }
 
@@ -216,14 +216,5 @@ body i {
     to {
         top: 0;
         opacity: 1;
-    }
-}
-
-/* Responsive */
-@media screen and (max-width: 770px) {
-    #add-task,
-    #buttons,
-    #to-do-list {
-        width: 100%;
     }
 }
