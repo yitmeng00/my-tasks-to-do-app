@@ -35,14 +35,27 @@ function renderToDosList() {
     [...document.getElementsByClassName("update-button")].forEach((updateButton) => {
         updateButton.addEventListener("click", function () {
             const taskId = this.getAttribute("data-id");
-            showUpdateModal(taskId);
+            const taskIndex = toDoList.findIndex((t) => t.id == taskId);
+            const { text } = toDoList[taskIndex];
+
+            modalTaskId = taskId; // store the id of the task being edited
+            
+            renderModal();
+            const modalBody = document.querySelector("#dynamic-modal .modal-body");
+            modalBody.innerHTML = `
+            <input id="modal-to-do-id" type="hidden" value="${taskId}">
+            <input id="modal-to-do-desc" type="text" value="${text.trim()}">
+            `;
+
+            openModal("Update To-Do Description", "Confirm", () => updateToDo());
         });
     });
 
     [...document.getElementsByClassName("delete-button")].forEach((deleteButton) => {
         deleteButton.addEventListener("click", function () {
             const taskId = this.getAttribute("data-id");
-            showRemoveModal(taskId);
+            renderModal();
+            openModal("Delete To-Do", "Confirm", () => deleteToDo(+taskId));
         });
     });
 
@@ -92,7 +105,7 @@ function addToDo(event) {
 }
 
 // Update To-Do Description
-function updateToDo(id) {
+function updateToDo() {
     const taskText = document.querySelector("#modal-to-do-desc").value;
 
     if (taskText.trim().length === 0) return;
@@ -105,6 +118,8 @@ function updateToDo(id) {
     modal.style.display = "none";
     showNotification("success", "Updated Successfully.");
     renderToDosList();
+    const dynamicModal = document.querySelector("#dynamic-modal");
+    dynamicModal.remove();
 }
 
 // Delete To-Do
@@ -115,6 +130,8 @@ function deleteToDo(id) {
     modal.style.display = "none";
     showNotification("success", "Deleted Successfully.");
     renderToDosList();
+    const dynamicModal = document.querySelector("#dynamic-modal");
+    dynamicModal.remove();
 }
 
 // Change To-Do State to Completed
@@ -129,7 +146,7 @@ function completeToDo(id) {
     renderToDosList();
 }
 
-function showModal(headerTitle, actionBtnText, actionFn) {
+function openModal(headerTitle, actionBtnText, actionFn) {
     document.querySelector("#modal-action-btn").addEventListener("click", actionFn);
 
     const modal = document.getElementById("dynamic-modal");
@@ -139,29 +156,17 @@ function showModal(headerTitle, actionBtnText, actionFn) {
     modal.style.display = "block";
     span.onclick = function () {
         modal.style.display = "none";
+        const dynamicModal = document.querySelector("#dynamic-modal");
+        dynamicModal.remove();
     };
 
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
+            const dynamicModal = document.querySelector("#dynamic-modal");
+            dynamicModal.remove();
         }
     };
-}
-
-function showUpdateModal(id) {
-    const taskIndex = toDoList.findIndex((t) => t.id == id);
-    const { text } = toDoList[taskIndex];
-
-    modalTaskId = id; // store the id of the task being edited
-    
-    document.querySelector("#dynamic-modal .modal-body #modal-to-do-id").value = id;
-    document.querySelector("#dynamic-modal .modal-body #modal-to-do-desc").value = text.trim();
-
-    showModal("Update To-Do Description", "Confirm", () => updateToDo(+id));
-}
-
-function showRemoveModal(id) {
-    showModal("Delete To-Do", "Confirm", () => deleteToDo(+id));
 }
 
 function showNotification(type, text) {
@@ -169,6 +174,38 @@ function showNotification(type, text) {
     if (type == "success") {
         notyf.success(text);
     }
+}
+
+function renderModal() {
+    const modalContainer = document.createElement("DIV");
+    modalContainer.setAttribute('id', "dynamic-modal");
+    modalContainer.setAttribute('class', "modal");
+    const modalContent = document.createElement("DIV");
+    modalContent.setAttribute('class', "modal-content");
+    const modalHeader = document.createElement("DIV");
+    modalHeader.setAttribute('class', "modal-header");
+    const modalHeaderTitle = document.createElement("DIV");
+    modalHeaderTitle.setAttribute('id', "modal-header-title");
+    const divBtn = document.createElement("DIV");
+    const closeModalBtn = document.createElement("SPAN");
+    closeModalBtn.setAttribute('class', "close-modal-btn");
+    closeModalBtn.innerHTML="&times;";
+    const modalBody = document.createElement("DIV");
+    modalBody.setAttribute('class', "modal-body");
+    const modalFooter = document.createElement("DIV");
+    modalFooter.setAttribute('class', "modal-footer");
+    const modalActionBtn = document.createElement("DIV");
+    modalActionBtn.setAttribute('id', "modal-action-btn");
+    modalActionBtn.setAttribute('class', "button");
+    modalContainer.appendChild(modalContent);
+    modalContent.appendChild(modalHeader);
+    modalHeader.appendChild(modalHeaderTitle);
+    modalHeader.appendChild(divBtn);
+    divBtn.appendChild(closeModalBtn);
+    modalContent.appendChild(modalBody);
+    modalContent.appendChild(modalFooter);
+    modalFooter.appendChild(modalActionBtn);
+    document.body.appendChild(modalContainer);
 }
 
 addTaskForm.addEventListener("submit", addToDo);
