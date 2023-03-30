@@ -1,8 +1,9 @@
 /* Variables */
 :root {
-    --primary: #ff9800;
-    --secondary: #ffe0b2;
-    --tertiary: #4caf50;
+    --primary: rgb(255, 152, 0); /* #ff9800 */
+    --secondary: rgb(255, 224, 178); /* #ffe0b2 */
+    --tertiary: rgb(76, 175, 80); /* #4caf50 */
+    --todo-hover: rgba(255, 224, 178, 0.2);
 }
 
 /* Default Styling */
@@ -53,7 +54,7 @@ main form#todo__new-input-form {
 main form#todo__new-input-form input[type="text"] {
     font-family: Arial, FontAwesome;
     font-size: 1em;
-    width: 60%;
+    width: 50%;
     margin-top: 1em;
     padding: 0.5em;
     border: none;
@@ -61,12 +62,22 @@ main form#todo__new-input-form input[type="text"] {
     outline: none;
 }
 
+main form#todo__new-input-form input[type="text"]:focus {
+    border-width: 0.2em !important;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+}
+
 /* To-Do List */
 #todo__list li {
     display: flex;
     justify-content: space-between;
-    padding: 0.5em;
-    border: 1px solid var(--primary);
+    padding: 1em;
+    border-bottom: 1px solid var(--primary);
+}
+
+#todo__list li:hover {
+    background-color: var(--todo-hover);
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 }
 
 #todo__list li .todo__delete-button,
@@ -93,7 +104,7 @@ main form#todo__new-input-form input[type="text"] {
 }
 
 /* Customise checkbox */
-#todo__list input[type="checkbox"]#todo__completed-checkbox {
+#todo__list input[type="checkbox"].todo__complete-checkbox {
     appearance: none;
     background-color: white;
     margin: 0;
@@ -107,24 +118,47 @@ main form#todo__new-input-form input[type="text"] {
     cursor: pointer;
 }
 
-#todo__list input[type="checkbox"]#todo__completed-checkbox::before {
-    content: "";
-    width: 0.65em;
-    height: 0.65em;
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em var(--primary);
-    transform-origin: bottom left;
-    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+#todo__list input[type="checkbox"].todo__complete-checkbox:checked {
+    border: none;
 }
 
-#todo__list input[type="checkbox"]#todo__completed-checkbox:checked::before {
+#todo__list input[type="checkbox"].todo__complete-checkbox::before {
+    content: "";
+    width: 1.2em;
+    height: 1.5em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--tertiary);
+    transform-origin: bottom left;
+    clip-path: polygon(23% 44%, 5% 60%, 40% 90%, 100% 25%, 90% 10%, 43% 62%);
+}
+
+#todo__list input[type="checkbox"].todo__complete-checkbox:checked::before {
     transform: scale(1);
 }
 
-#todo__list input[type="checkbox"]#todo__completed-checkbox:focus {
+#todo__list input[type="checkbox"].todo__complete-checkbox:focus {
     outline: max(2px, 0.1em) solid var(--secondary);
     outline-offset: max(2px, 0.15em);
+}
+
+del.todo__completed-strike-animation {
+    position: relative;
+    text-decoration: none;
+}
+
+del.todo__completed-strike-animation::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 0.1em;
+    background-color: var(--primary);
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: strike 0.2s ease-in-out forwards;
 }
 
 /* Modal */
@@ -148,7 +182,7 @@ main form#todo__new-input-form input[type="text"] {
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 40%;
+    width: 30%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -187,8 +221,14 @@ main form#todo__new-input-form input[type="text"] {
 #todo__dynamic-modal .modal-body input[type="text"]#modal__todo-desc {
     padding: 0.5em;
     width: 100%;
-    border-color: var(--primary);
+    border: none;
+    border-bottom: 1px solid var(--primary) !important;
     outline: none;
+}
+
+#todo__dynamic-modal .modal-body input[type="text"]#modal__todo-desc:hover {
+    border-width: 0.2em !important;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 }
 
 #todo__dynamic-modal .modal-footer {
@@ -209,7 +249,7 @@ main form#todo__new-input-form input[type="text"] {
     background-color: var(--primary);
 }
 
-/* Add Modal Animation */
+/* Add Animation */
 @-webkit-keyframes animatetop {
     from {
         top: -300px;
@@ -231,3 +271,12 @@ main form#todo__new-input-form input[type="text"] {
         opacity: 1;
     }
 }
+
+@keyframes strike {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }

@@ -27,9 +27,8 @@ function renderToDosList() {
     }
 
     // else render all todo
-    toDoListContainer.style.border = "1px solid rgba(34,36,38,.15)";
     toDoListContainer.style.margin = "3em auto 0em";
-    toDoListContainer.style.width = "60%";
+    toDoListContainer.style.width = "50%";
     toDoListContainer.style.listStyle = "none";
     toDoList.forEach((todo) => {
         const toDoElement = createToDoElement(todo);
@@ -81,10 +80,10 @@ function createToDoElement(todo) {
     toDoElement.innerHTML = `
         <div class="todo__desc-container" style="align-self: center; display: flex; gap: 0.5em;">
             <div class="todo__checkbox-container" style="align-self: center;">
-                <input data-id="${todo.id}" id="todo__completed-checkbox" class="todo__complete-checkbox" type="checkbox" ${todo.completed ? 'checked' : ''}>
+                <input data-id="${todo.id}" id="todo__completed-checkbox-${todo.id}" class="todo__complete-checkbox" type="checkbox" ${todo.completed ? 'checked' : ''}>
             </div>
             <div>
-                <label>${todo.desc}</label>
+                <label for="todo__completed-checkbox-${todo.id}" style="cursor: pointer">${todo.completed ? `<del class="todo__completed-strike-animation">${todo.desc}</del>` : `${todo.desc}`}</label>
             </div>
         </div>
         <div>
