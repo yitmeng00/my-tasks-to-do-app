@@ -6,6 +6,7 @@ MyTasks is a Simple To-Do App built with HTML, CSS, and VanillaJS.
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Known Issues](#known-issues)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [License](#license)
@@ -22,6 +23,10 @@ This app includes the following features:
 - Mark To-Do as complete
 - Edit To-Do description
 - Delete To-Do from your todo list
+
+## Known Issues
+
+- Issue 1: When you type a very long description for new todo in the new todo inputbox, after you added the new todo, it will display exceed the box and block the edit and delete button. This issue is currently undergoing resolution.
 
 ## Technologies Used
 
