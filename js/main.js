@@ -83,7 +83,7 @@ function createToDoElement(todo) {
                 <input data-id="${todo.id}" id="todo__completed-checkbox-${todo.id}" class="todo__complete-checkbox" type="checkbox" ${todo.completed ? 'checked' : ''}>
             </div>
             <div>
-                <label for="todo__completed-checkbox-${todo.id}" style="cursor: pointer">${todo.completed ? `<del class="todo__completed-strike-animation">${todo.desc}</del>` : `${todo.desc}`}</label>
+                <label for="todo__completed-checkbox-${todo.id}" style="cursor: pointer;">${todo.completed ? `<del class="todo__completed-strike-animation">${todo.desc}</del>` : `${todo.desc}`}</label>
             </div>
         </div>
         <div>
