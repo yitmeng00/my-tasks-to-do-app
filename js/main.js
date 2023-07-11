@@ -82,11 +82,11 @@ function createToDoElement(todo) {
             <div class="todo__checkbox-container" style="align-self: center;">
                 <input data-id="${todo.id}" id="todo__completed-checkbox-${todo.id}" class="todo__complete-checkbox" type="checkbox" ${todo.completed ? 'checked' : ''}>
             </div>
-            <div>
+            <div class="todo__completed-label-container">
                 <label for="todo__completed-checkbox-${todo.id}" style="cursor: pointer;">${todo.completed ? `<del class="todo__completed-strike-animation">${todo.desc}</del>` : `${todo.desc}`}</label>
             </div>
         </div>
-        <div>
+        <div class="todo__action-btn-container">
             <button data-id="${todo.id}" class="todo__edit-button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
             <button data-id="${todo.id}" class="todo__delete-button"><i class="fa fa-trash" aria-hidden="true"></i></button>
         </div>

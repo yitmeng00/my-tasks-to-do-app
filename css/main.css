@@ -144,6 +144,14 @@ main form#todo__new-input-form input[type="text"]:focus {
     outline-offset: max(2px, 0.15em);
 }
 
+.todo__completed-label-container label {
+    word-break: break-all;
+}
+
+.todo__action-btn-container {
+    display: flex;
+}
+
 del.todo__completed-strike-animation {
     position: relative;
     text-decoration: none;
