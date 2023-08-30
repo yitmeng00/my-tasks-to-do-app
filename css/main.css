@@ -152,23 +152,9 @@ main form#todo__new-input-form input[type="text"]:focus {
     display: flex;
 }
 
-del.todo__completed-strike-animation {
-    position: relative;
-    text-decoration: none;
-}
-
-del.todo__completed-strike-animation::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 0.1em;
-    background-color: var(--primary);
-    transform-origin: left center;
-    transform: scaleX(0);
-    animation: strike 0.2s ease-in-out forwards;
+.todo__completed-label-container .todo__completed-desc {
+    text-decoration: line-through;
+    text-decoration-color: var(--primary);
 }
 
 /* Modal */
@@ -281,24 +267,15 @@ del.todo__completed-strike-animation::after {
     }
 }
 
-@keyframes strike {
-    from {
-        transform: scaleX(0);
-    }
-    to {
-        transform: scaleX(1);
-    }
-}
-
 /* Responsive */
 @media screen and (max-width: 425px) {
     #todo__dynamic-modal .modal-content {
-        width: 75%!important;
+        width: 75% !important;
     }
 }
 
-@media screen and (max-width: 768px) and (min-width: 426px){
+@media screen and (max-width: 768px) and (min-width: 426px) {
     #todo__dynamic-modal .modal-content {
-        width: 50%!important;
+        width: 50% !important;
     }
 }

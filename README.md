@@ -27,7 +27,7 @@ This app includes the following features:
 ## Known Issues
 
 - Issue 1: Long todo label will exceed the box and block the edit and delete button. [Fixed]
-- Issue 2: The current implementation for strikethrough after marking a todo as completed fails to apply the strikethrough formatting correctly when the content spans multiple lines. This issue is currently undergoing resolution.
+- Issue 2: The current implementation for strikethrough after marking a todo as completed fails to apply the strikethrough formatting correctly when the content spans multiple lines. [Fixed]
 
 ## Technologies Used
 
