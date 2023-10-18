@@ -43,7 +43,6 @@ To run this app locally, simply clone this repository and open the index.html fi
 
 ```bash
 git clone https://github.com/yitmeng00/my-tasks-to-do-app.git
-cd my-tasks-to-do-app
 ```
 
 ## License
