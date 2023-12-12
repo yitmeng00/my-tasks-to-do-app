@@ -36,42 +36,54 @@ function renderToDosList() {
     });
 
     // add click event to update button
-    [...document.getElementsByClassName("todo__edit-button")].forEach((updateButton) => {
-        updateButton.addEventListener("click", function () {
-            const toDoId = this.getAttribute("data-id");
-            const toDoIndex = toDoList.findIndex((t) => t.id == toDoId);
-            const { desc } = toDoList[toDoIndex];
-            
-            renderModal();
-            const modalBody = document.querySelector("#todo__dynamic-modal .modal-body");
-            modalBody.innerHTML = `
+    [...document.getElementsByClassName("todo__edit-button")].forEach(
+        (updateButton) => {
+            updateButton.addEventListener("click", function () {
+                const toDoId = this.getAttribute("data-id");
+                const toDoIndex = toDoList.findIndex((t) => t.id == toDoId);
+                const { desc } = toDoList[toDoIndex];
+
+                renderModal();
+                const modalBody = document.querySelector(
+                    "#todo__dynamic-modal .modal-body"
+                );
+                modalBody.innerHTML = `
             <input id="modal__todo-id" type="hidden" value="${toDoId}">
             <input id="modal__todo-desc" type="text" value="${desc.trim()}">
             `;
-            openModal("Update To-Do Description", "Confirm", () => updateToDo(+toDoId));
-        });
-    });
+                openModal("Update To-Do Description", "Confirm", () =>
+                    updateToDo(+toDoId)
+                );
+            });
+        }
+    );
 
     // add click event to delete button
-    [...document.getElementsByClassName("todo__delete-button")].forEach((deleteButton) => {
-        deleteButton.addEventListener("click", function () {
-            const toDoId = this.getAttribute("data-id");
-            renderModal();
-            const modalBody = document.querySelector("#todo__dynamic-modal .modal-body");
-            modalBody.innerHTML = `
+    [...document.getElementsByClassName("todo__delete-button")].forEach(
+        (deleteButton) => {
+            deleteButton.addEventListener("click", function () {
+                const toDoId = this.getAttribute("data-id");
+                renderModal();
+                const modalBody = document.querySelector(
+                    "#todo__dynamic-modal .modal-body"
+                );
+                modalBody.innerHTML = `
             <p>Are you sure you want to delete this todo?</p>
             `;
-            openModal("Delete To-Do", "Confirm", () => deleteToDo(+toDoId));
-        });
-    });
+                openModal("Delete To-Do", "Confirm", () => deleteToDo(+toDoId));
+            });
+        }
+    );
 
     // add click event to complete checkbox
-    [...document.getElementsByClassName("todo__complete-checkbox")].forEach((completeCheckBox) => {
-        completeCheckBox.addEventListener("click", function () {
-            const toDoId = this.getAttribute("data-id");
-            completeToDo(toDoId);
-        });
-    });
+    [...document.getElementsByClassName("todo__complete-checkbox")].forEach(
+        (completeCheckBox) => {
+            completeCheckBox.addEventListener("click", function () {
+                const toDoId = this.getAttribute("data-id");
+                completeToDo(toDoId);
+            });
+        }
+    );
 }
 
 // Create each todo element
@@ -80,15 +92,29 @@ function createToDoElement(todo) {
     toDoElement.innerHTML = `
         <div class="todo__desc-container" style="align-self: center; display: flex; gap: 0.5em;">
             <div class="todo__checkbox-container" style="align-self: center;">
-                <input data-id="${todo.id}" id="todo__completed-checkbox-${todo.id}" class="todo__complete-checkbox" type="checkbox" ${todo.completed ? 'checked' : ''}>
+                <input data-id="${todo.id}" id="todo__completed-checkbox-${
+        todo.id
+    }" class="todo__complete-checkbox" type="checkbox" ${
+        todo.completed ? "checked" : ""
+    }>
             </div>
             <div class="todo__completed-label-container">
-                <label for="todo__completed-checkbox-${todo.id}" style="cursor: pointer;">${todo.completed ? `<span class="todo__completed-desc">${todo.desc}</span>` : `${todo.desc}`}</label>
+                <label for="todo__completed-checkbox-${
+                    todo.id
+                }" style="cursor: pointer;">${
+        todo.completed
+            ? `<span class="todo__completed-desc">${todo.desc}</span>`
+            : `${todo.desc}`
+    }</label>
             </div>
         </div>
         <div class="todo__action-btn-container">
-            <button data-id="${todo.id}" class="todo__edit-button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-            <button data-id="${todo.id}" class="todo__delete-button"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            <button data-id="${
+                todo.id
+            }" class="todo__edit-button"><i class="fa-regular fa-pen-to-square"></i></button>
+            <button data-id="${
+                todo.id
+            }" class="todo__delete-button"><i class="fa-regular fa-trash-can"></i></button>
         </div>
     `;
     return toDoElement;
@@ -164,7 +190,9 @@ function completeToDo(id) {
 
 // trigger modal to display
 function openModal(headerTitle, actionBtnText, actionFn) {
-    document.querySelector("#modal-action-btn").addEventListener("click", actionFn);
+    document
+        .querySelector("#modal-action-btn")
+        .addEventListener("click", actionFn);
 
     const modal = document.getElementById("todo__dynamic-modal");
     var span = document.getElementsByClassName("close-modal-btn")[0];
@@ -188,25 +216,25 @@ function openModal(headerTitle, actionBtnText, actionFn) {
 // render modal
 function renderModal() {
     const modalContainer = document.createElement("DIV");
-    modalContainer.setAttribute('id', "todo__dynamic-modal");
-    modalContainer.setAttribute('class', "modal");
+    modalContainer.setAttribute("id", "todo__dynamic-modal");
+    modalContainer.setAttribute("class", "modal");
     const modalContent = document.createElement("DIV");
-    modalContent.setAttribute('class', "modal-content");
+    modalContent.setAttribute("class", "modal-content");
     const modalHeader = document.createElement("DIV");
-    modalHeader.setAttribute('class', "modal-header");
+    modalHeader.setAttribute("class", "modal-header");
     const modalHeaderTitle = document.createElement("DIV");
-    modalHeaderTitle.setAttribute('id', "modal-header-title");
+    modalHeaderTitle.setAttribute("id", "modal-header-title");
     const divBtn = document.createElement("DIV");
     const closeModalBtn = document.createElement("SPAN");
-    closeModalBtn.setAttribute('class', "close-modal-btn");
-    closeModalBtn.innerHTML="&times;";
+    closeModalBtn.setAttribute("class", "close-modal-btn");
+    closeModalBtn.innerHTML = "&times;";
     const modalBody = document.createElement("DIV");
-    modalBody.setAttribute('class', "modal-body");
+    modalBody.setAttribute("class", "modal-body");
     const modalFooter = document.createElement("DIV");
-    modalFooter.setAttribute('class', "modal-footer");
+    modalFooter.setAttribute("class", "modal-footer");
     const modalActionBtn = document.createElement("DIV");
-    modalActionBtn.setAttribute('id', "modal-action-btn");
-    modalActionBtn.setAttribute('class', "button");
+    modalActionBtn.setAttribute("id", "modal-action-btn");
+    modalActionBtn.setAttribute("class", "button");
     modalContainer.appendChild(modalContent);
     modalContent.appendChild(modalHeader);
     modalHeader.appendChild(modalHeaderTitle);
