@@ -45,17 +45,17 @@ function renderToDosList() {
 
                 renderModal();
                 const modalBody = document.querySelector(
-                    "#todo__dynamic-modal .modal-body"
+                    "#todo__dynamic-modal .modal-body",
                 );
                 modalBody.innerHTML = `
             <input id="modal__todo-id" type="hidden" value="${toDoId}">
             <input id="modal__todo-desc" type="text" value="${desc.trim()}">
             `;
                 openModal("Update To-Do Description", "Confirm", () =>
-                    updateToDo(+toDoId)
+                    updateToDo(+toDoId),
                 );
             });
-        }
+        },
     );
 
     // add click event to delete button
@@ -65,14 +65,14 @@ function renderToDosList() {
                 const toDoId = this.getAttribute("data-id");
                 renderModal();
                 const modalBody = document.querySelector(
-                    "#todo__dynamic-modal .modal-body"
+                    "#todo__dynamic-modal .modal-body",
                 );
                 modalBody.innerHTML = `
             <p>Are you sure you want to delete this todo?</p>
             `;
                 openModal("Delete To-Do", "Confirm", () => deleteToDo(+toDoId));
             });
-        }
+        },
     );
 
     // add click event to complete checkbox
@@ -82,7 +82,7 @@ function renderToDosList() {
                 const toDoId = this.getAttribute("data-id");
                 completeToDo(toDoId);
             });
-        }
+        },
     );
 }
 
@@ -93,19 +93,19 @@ function createToDoElement(todo) {
         <div class="todo__desc-container" style="align-self: center; display: flex; gap: 0.5em;">
             <div class="todo__checkbox-container" style="align-self: center;">
                 <input data-id="${todo.id}" id="todo__completed-checkbox-${
-        todo.id
-    }" class="todo__complete-checkbox" type="checkbox" ${
-        todo.completed ? "checked" : ""
-    }>
+                    todo.id
+                }" class="todo__complete-checkbox" type="checkbox" ${
+                    todo.completed ? "checked" : ""
+                }>
             </div>
             <div class="todo__completed-label-container">
                 <label for="todo__completed-checkbox-${
                     todo.id
                 }" style="cursor: pointer;">${
-        todo.completed
-            ? `<span class="todo__completed-desc">${todo.desc}</span>`
-            : `${todo.desc}`
-    }</label>
+                    todo.completed
+                        ? `<span class="todo__completed-desc">${todo.desc}</span>`
+                        : `${todo.desc}`
+                }</label>
             </div>
         </div>
         <div class="todo__action-btn-container">
