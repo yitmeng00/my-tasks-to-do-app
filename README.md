@@ -46,4 +46,4 @@ git clone https://github.com/yitmeng00/my-tasks-to-do-app.git
 ```
 
 ## License
-This project does not has any license.
+This project is licensed under the MIT License.
