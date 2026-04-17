@@ -30,7 +30,7 @@ MyTasks is a client-side task management application that persists data in the b
 
 | Homepage | Add Task |
 |---|---|
-| ![Web Home](screenshots/desktop-view1.png) | ![Web Chat Room](screenshots/desktop-view2.png) |
+| ![Web Home](screenshots/desktop-view1.png) | ![Web Add Task](screenshots/desktop-view2.png) |
 
 ---
 
@@ -38,7 +38,7 @@ MyTasks is a client-side task management application that persists data in the b
 
 | Homepage | Add Task |
 |---|---|
-| ![Mobile Home](docs/screenshots/mobile-view1.png) ![Mobile Home](docs/screenshots/mobile-view2.png) | ![Mobile Chat Room](docs/screenshots/mobile-view3.png) |
+| ![Mobile Home 1](screenshots/mobile-view1.png) ![Mobile Home 2](screenshots/mobile-view2.png) | ![Mobile Add Task](screenshots/mobile-view3.png) |
 
 ---
 
