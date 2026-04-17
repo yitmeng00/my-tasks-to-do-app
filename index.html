@@ -1,17 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>MyTasks To-Do App</title>
+        <title>MyTasks — To-Do App</title>
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
-
-        <!-- css and js src -->
         <link rel="stylesheet" href="css/main.css" />
-        <script type="text/javascript" src="js/main.js?v=1.0.0" defer></script>
-
-        <!-- cdn link -->
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -21,37 +16,237 @@
             href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
         />
         <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+        <script type="text/javascript" src="js/main.js" defer></script>
     </head>
     <body>
-        <!-- Main Header -->
-        <header class="main-header">
-            <div class="header-content">
-                <div class="header-content-start">
-                    <i class="fa-solid fa-bars"></i>
+        <div class="app">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="app-header__brand">
+                    <span class="app-header__icon"
+                        ><i class="fa-solid fa-leaf"></i
+                    ></span>
+                    <div>
+                        <h1 class="app-header__title">MyTasks</h1>
+                        <p class="app-header__date" id="app-header__date"></p>
+                    </div>
                 </div>
-                <div class="header-content-end">
-                    <div><i class="fa-regular fa-bell"></i></div>
-                    <div><i class="fa-solid fa-gear"></i></i></div>
+                <div class="app-header__stats">
+                    <div class="stat-card">
+                        <span class="stat-card__value" id="stat__total">0</span>
+                        <span class="stat-card__label">Total</span>
+                    </div>
+                    <div class="stat-card">
+                        <span
+                            class="stat-card__value stat-card__value--done"
+                            id="stat__completed"
+                            >0</span
+                        >
+                        <span class="stat-card__label">Done</span>
+                    </div>
+                    <div class="stat-card">
+                        <span
+                            class="stat-card__value stat-card__value--overdue"
+                            id="stat__overdue"
+                            >0</span
+                        >
+                        <span class="stat-card__label">Overdue</span>
+                    </div>
                 </div>
-            </div>
-        </header>
-        <!-- Main Content -->
-        <main>
-            <section>
-                <!-- Add To-Do -->
-                <div class="todo__new-input-container">
-                    <form id="todo__new-input-form">
-                        <input
-                            id="todo__new-inputbox"
-                            type="text"
-                            placeholder="➕ Add To-Do"
-                        />
-                    </form>
+            </header>
+
+            <main class="app-main">
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
                 </div>
 
-                <!-- To-Do List -->
-                <ul id="todo__list"></ul>
-            </section>
-        </main>
+                <!-- Add Task Form -->
+                <section class="add-task-section">
+                    <form
+                        id="todo__new-input-form"
+                        class="add-task-form"
+                        novalidate
+                    >
+                        <div class="add-task-form__primary">
+                            <input
+                                type="text"
+                                id="todo__new-inputbox"
+                                class="add-task-form__input"
+                                placeholder="What needs to be done?"
+                                autocomplete="off"
+                                maxlength="300"
+                            />
+                            <button
+                                type="submit"
+                                class="add-task-form__submit-btn"
+                                aria-label="Add task"
+                            >
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="add-task-form__meta">
+                            <div class="form-field">
+                                <label
+                                    class="form-field__label"
+                                    for="todo__new-priority"
+                                >
+                                    <i class="fa-solid fa-flag"></i> Priority
+                                </label>
+                                <select
+                                    id="todo__new-priority"
+                                    class="form-field__select"
+                                >
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label
+                                    class="form-field__label"
+                                    for="todo__new-duedate"
+                                >
+                                    <i class="fa-regular fa-calendar"></i> Due
+                                    Date
+                                </label>
+                                <input
+                                    type="date"
+                                    id="todo__new-duedate"
+                                    class="form-field__date"
+                                />
+                            </div>
+                            <div class="form-field">
+                                <label
+                                    class="form-field__label"
+                                    for="todo__new-category"
+                                >
+                                    <i class="fa-solid fa-tag"></i> Category
+                                </label>
+                                <select
+                                    id="todo__new-category"
+                                    class="form-field__select"
+                                >
+                                    <option value="">None</option>
+                                    <option value="work">Work</option>
+                                    <option value="personal">Personal</option>
+                                    <option value="health">Health</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Controls: Search + Filter + Sort -->
+                <section class="controls-section">
+                    <div class="controls-section__search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input
+                            type="text"
+                            id="todo__search-input"
+                            placeholder="Search tasks..."
+                            autocomplete="off"
+                        />
+                    </div>
+                    <div
+                        class="controls-section__filters"
+                        id="filter-tabs"
+                        role="tablist"
+                        aria-label="Filter tasks"
+                    >
+                        <button
+                            class="filter-tab filter-tab--active"
+                            data-filter="all"
+                            role="tab"
+                        >
+                            All
+                        </button>
+                        <button
+                            class="filter-tab"
+                            data-filter="active"
+                            role="tab"
+                        >
+                            Active
+                        </button>
+                        <button
+                            class="filter-tab"
+                            data-filter="completed"
+                            role="tab"
+                        >
+                            Done
+                        </button>
+                        <button
+                            class="filter-tab"
+                            data-filter="overdue"
+                            role="tab"
+                        >
+                            Overdue
+                        </button>
+                    </div>
+                    <div class="controls-section__sort">
+                        <i class="fa-solid fa-sort"></i>
+                        <select id="todo__sort-select" aria-label="Sort tasks">
+                            <option value="newest">Newest</option>
+                            <option value="oldest">Oldest</option>
+                            <option value="priority">Priority</option>
+                            <option value="duedate">Due Date</option>
+                        </select>
+                    </div>
+                </section>
+
+                <!-- Bulk Actions -->
+                <section class="bulk-actions">
+                    <button class="bulk-btn" id="btn__mark-all-complete">
+                        <i class="fa-solid fa-check-double"></i> Mark All Done
+                    </button>
+                    <button
+                        class="bulk-btn bulk-btn--danger"
+                        id="btn__clear-completed"
+                    >
+                        <i class="fa-regular fa-circle-xmark"></i> Clear
+                        Completed
+                    </button>
+                </section>
+
+                <!-- Todo List -->
+                <section class="todo-list-section">
+                    <ul
+                        id="todo__list"
+                        class="todo-list"
+                        aria-label="Task list"
+                        aria-live="polite"
+                    ></ul>
+                </section>
+            </main>
+        </div>
+
+        <!-- Modal Overlay (static, reused) -->
+        <div
+            id="modal-overlay"
+            class="modal-overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+        >
+            <div class="modal">
+                <div class="modal__header">
+                    <h2 class="modal__title" id="modal-title"></h2>
+                    <button class="modal__close-btn" aria-label="Close modal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal__body" id="modal-body"></div>
+                <div class="modal__footer">
+                    <button class="btn btn--secondary" id="modal-cancel-btn">
+                        Cancel
+                    </button>
+                    <button class="btn btn--primary" id="modal-confirm-btn">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
