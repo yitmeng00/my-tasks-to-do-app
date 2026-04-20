@@ -69,7 +69,7 @@ MyTasks is a client-side task management application that persists data in the b
 |---|---|
 | Progress Bar | Visual completion percentage updated in real time |
 | Stats Header | Live Total / Done / Overdue counts pinned to the header |
-| Notifications | Success and error toasts via Notyf |
+| Notifications | Success and error toasts |
 
 ---
 
@@ -77,12 +77,10 @@ MyTasks is a client-side task management application that persists data in the b
 
 | Layer | Technology |
 |---|---|
-| Markup | HTML5 (semantic elements, ARIA attributes) |
-| Styling | CSS3 (custom properties, flexbox, keyframe animations) |
-| Logic | Vanilla JavaScript ES6+ (`"use strict"`, IIFE modules, `Object.freeze`) |
+| Markup | HTML5 |
+| Styling | CSS3 |
+| Logic | Vanilla JavaScript ES6+ |
 | Icons | [Font Awesome 6.5](https://fontawesome.com/) via CDN |
-| Notifications | [Notyf 3](https://github.com/caroso1222/notyf) via CDN |
-| Fonts | [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts |
 | Storage | Browser `localStorage` |
 
 ---
