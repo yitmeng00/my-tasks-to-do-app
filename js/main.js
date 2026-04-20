@@ -222,34 +222,42 @@ const State = (() => {
 
 /* Notification Service */
 const NotificationService = (() => {
-    const notyf = new Notyf({
-        duration: 2500,
-        position: { x: "right", y: "bottom" },
-        types: [
-            {
-                type: "success",
-                background: "#6B8E6B",
-                icon: {
-                    className: "fa-solid fa-check",
-                    tagName: "i",
-                    color: "white",
-                },
-            },
-            {
-                type: "error",
-                background: "#C0392B",
-                icon: {
-                    className: "fa-solid fa-xmark",
-                    tagName: "i",
-                    color: "white",
-                },
-            },
-        ],
-    });
+    const container = document.createElement("div");
+    container.className = "notification-container";
+    document.body.appendChild(container);
+
+    const createNotification = (message, type) => {
+        const notification = document.createElement("div");
+        notification.className = `notification ${type}`;
+
+        notification.innerHTML = `
+            <span class="icon">
+                <i class="fa-solid ${type === "success" ? "fa-check" : "fa-xmark"}"></i>
+            </span>
+            <span class="message">${message}</span>
+        `;
+
+        container.appendChild(notification);
+
+        // Trigger animation
+        setTimeout(() => {
+            notification.classList.add("show");
+        }, 10);
+
+        // Auto remove
+        setTimeout(() => {
+            notification.classList.remove("show");
+            notification.classList.add("hide");
+
+            notification.addEventListener("transitionend", () => {
+                notification.remove();
+            });
+        }, 2500);
+    };
 
     return {
-        success: (msg) => notyf.success(msg),
-        error: (msg) => notyf.error(msg),
+        success: (msg) => createNotification(msg, "success"),
+        error: (msg) => createNotification(msg, "error"),
     };
 })();
 
