@@ -28,60 +28,79 @@ MyTasks is a client-side task management application that persists data in the b
 
 ### Web
 
-| Homepage | Add Task |
-|---|---|
-| ![Web Home](screenshots/desktop-view1.png) | ![Web Add Task](screenshots/desktop-view2.png) |
+<table>
+  <tr>
+    <th width="50%">Homepage</th>
+    <th width="50%">Add Task</th>
+  </tr>
+  <tr>
+    <td><img src="screenshots/desktop-view1.png" width="100%"></td>
+    <td><img src="screenshots/desktop-view2.png" width="100%"></td>
+  </tr>
+</table>
 
 ---
 
 ### Mobile
 
-| Homepage | Add Task |
-|---|---|
-| ![Mobile Home 1](screenshots/mobile-view1.png) ![Mobile Home 2](screenshots/mobile-view2.png) | ![Mobile Add Task](screenshots/mobile-view3.png) |
+<table>
+  <tr>
+    <th width="33%">Homepage</th>
+    <th width="33%">Homepage</th>
+    <th width="33%">Add Task</th>
+  </tr>
+  <tr>
+    <td><img src="screenshots/mobile-view1.png" width="100%"></td>
+    <td><img src="screenshots/mobile-view2.png" width="100%"></td>
+    <td><img src="screenshots/mobile-view3.png" width="100%"></td>
+  </tr>
+</table>
 
 ---
 
 ## Features
 
 ### Task Management
-| Feature | Description |
-|---|---|
-| Add Task | Create a task with description, priority, due date, and category |
-| Edit Task | Update any field of an existing task via modal |
-| Delete Task | Remove a task with a confirmation prompt |
-| Complete Task | Toggle completion state with an animated checkbox |
-| Mark All Done | Toggle all tasks between complete and active in one click |
-| Clear Completed | Bulk-remove all completed tasks with confirmation |
+
+| Feature         | Description                                                      |
+| --------------- | ---------------------------------------------------------------- |
+| Add Task        | Create a task with description, priority, due date, and category |
+| Edit Task       | Update any field of an existing task via modal                   |
+| Delete Task     | Remove a task with a confirmation prompt                         |
+| Complete Task   | Toggle completion state with an animated checkbox                |
+| Mark All Done   | Toggle all tasks between complete and active in one click        |
+| Clear Completed | Bulk-remove all completed tasks with confirmation                |
 
 ### Organisation & Discovery
-| Feature | Description |
-|---|---|
-| Priority Levels | High / Medium / Low — colour-coded left border stripe and badge |
-| Categories | Work, Personal, Health, Finance, Other — each with a distinct badge |
-| Due Dates | Optional due date with overdue and "Today" indicators |
-| Search | Keyword filter across all task descriptions |
-| Filter Tabs | All / Active / Done / Overdue views |
-| Sort Options | Newest, Oldest, By Priority, By Due Date |
+
+| Feature         | Description                                                         |
+| --------------- | ------------------------------------------------------------------- |
+| Priority Levels | High / Medium / Low — colour-coded left border stripe and badge     |
+| Categories      | Work, Personal, Health, Finance, Other — each with a distinct badge |
+| Due Dates       | Optional due date with overdue and "Today" indicators               |
+| Search          | Keyword filter across all task descriptions                         |
+| Filter Tabs     | All / Active / Done / Overdue views                                 |
+| Sort Options    | Newest, Oldest, By Priority, By Due Date                            |
 
 ### UI & UX
-| Feature | Description |
-|---|---|
-| Progress Bar | Visual completion percentage updated in real time |
-| Stats Header | Live Total / Done / Overdue counts pinned to the header |
-| Notifications | Success and error toasts |
+
+| Feature       | Description                                             |
+| ------------- | ------------------------------------------------------- |
+| Progress Bar  | Visual completion percentage updated in real time       |
+| Stats Header  | Live Total / Done / Overdue counts pinned to the header |
+| Notifications | Success and error toasts                                |
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Markup | HTML5 |
-| Styling | CSS3 |
-| Logic | Vanilla JavaScript ES6+ |
-| Icons | [Font Awesome 6.5](https://fontawesome.com/) via CDN |
-| Storage | Browser `localStorage` |
+| Layer   | Technology                                           |
+| ------- | ---------------------------------------------------- |
+| Markup  | HTML5                                                |
+| Styling | CSS3                                                 |
+| Logic   | Vanilla JavaScript ES6+                              |
+| Icons   | [Font Awesome 6.5](https://fontawesome.com/) via CDN |
+| Storage | Browser `localStorage`                               |
 
 ---
 
@@ -121,20 +140,24 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 ## Usage
 
 ### Adding a Task
+
 1. Type a description in the input field at the top.
 2. Optionally select a **Priority**, **Due Date**, and **Category**.
 3. Press **Enter** or click the **+** button.
 
 ### Editing a Task
+
 - Hover over a task row and click the **pencil** icon to open the edit modal.
 - Update any field and click **Save Changes**.
 
 ### Filtering & Searching
+
 - Use the **filter tabs** (All / Active / Done / Overdue) to narrow the list.
 - Type in the **search box** to filter by keyword in real time.
 - Use the **sort dropdown** to reorder by date added, priority, or due date.
 
 ### Bulk Actions
+
 - **Mark All Done** — toggles all tasks between complete and active.
 - **Clear Completed** — permanently removes all completed tasks after confirmation.
 
@@ -143,6 +166,7 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 ## Changelog
 
 ### v2.0.0
+
 - Full UI revamp with earth-tone design system (sienna, sage, cream palette)
 - Replaced dynamic modal construction with a reusable static modal overlay
 - Refactored JavaScript into modular pattern: `StorageManager`, `State`, `Renderer`, `EventHandlers`, `ModalService`, `NotificationService`, `App`
@@ -159,6 +183,7 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 - Switched localStorage key to `mytasks_todos_v2` (fresh namespace)
 
 ### v1.0.0
+
 - Initial release
 - Add, edit, delete, and complete tasks
 - localStorage persistence
@@ -167,10 +192,10 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## Known Issues
 
-| # | Status | Description |
-|---|---|---|
-| 1 | Fixed | Long task labels overflowed and obscured action buttons |
-| 2 | Fixed | Strikethrough style failed to apply correctly on multi-line labels |
+| #   | Status | Description                                                        |
+| --- | ------ | ------------------------------------------------------------------ |
+| 1   | Fixed  | Long task labels overflowed and obscured action buttons            |
+| 2   | Fixed  | Strikethrough style failed to apply correctly on multi-line labels |
 
 ---
 
