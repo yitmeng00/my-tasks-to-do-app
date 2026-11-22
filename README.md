@@ -99,7 +99,7 @@ MyTasks is a client-side task management application that persists data in the b
 | Markup  | HTML5                                                |
 | Styling | CSS3                                                 |
 | Logic   | Vanilla JavaScript ES6+                              |
-| Icons   | [Font Awesome 6.5](https://fontawesome.com/) via CDN |
+| Icons   | [Font Awesome 7.3](https://fontawesome.com/) via CDN |
 | Storage | Browser `localStorage`                               |
 
 ---

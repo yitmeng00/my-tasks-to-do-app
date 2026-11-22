@@ -55,11 +55,13 @@ const getDateStatus = (dateStr, completed) => {
     return "upcoming";
 };
 
-const escapeHtml = (str) => {
-    const el = document.createElement("div");
-    el.appendChild(document.createTextNode(str));
-    return el.innerHTML;
-};
+const escapeHtml = (str) =>
+    String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 
 const generateId = (todos) => {
     return todos.length > 0 ? Math.max(...todos.map((todo) => todo.id)) + 1 : 1;
@@ -414,7 +416,7 @@ const Renderer = {
             const prefix = isOverdue ? "Overdue · " : isToday ? "Today · " : "";
             dueDateHtml = `
                 <span class="todo-item__due-date ${cssClass}">
-                    <i class="fa-regular ${iconClass}"></i>${prefix}${label}
+                    <i class="fa-solid ${iconClass}"></i>${prefix}${label}
                 </span>`;
         }
 
