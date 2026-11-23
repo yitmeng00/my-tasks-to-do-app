@@ -80,7 +80,7 @@ MyTasks is a client-side task management application that persists data in the b
 | Due Dates       | Optional due date with overdue and "Today" indicators               |
 | Search          | Keyword filter across all task descriptions                         |
 | Filter Tabs     | All / Active / Done / Overdue views                                 |
-| Sort Options    | Newest, Oldest, By Priority, By Due Date                            |
+| Sort Options    | Newest, Oldest, Priority, Due Date                                  |
 
 ### UI & UX
 
@@ -88,7 +88,7 @@ MyTasks is a client-side task management application that persists data in the b
 | ------------- | ------------------------------------------------------- |
 | Progress Bar  | Visual completion percentage updated in real time       |
 | Stats Header  | Live Total / Done / Overdue counts pinned to the header |
-| Notifications | Success and error toasts                                |
+| Notifications | Custom success and error toasts (no external library)   |
 
 ---
 
@@ -130,7 +130,7 @@ Alternatively, serve it with any static file server to avoid potential browser r
 python3 -m http.server 8080
 
 # Node.js (npx)
-npx serve .
+npx serve -l 8080 .
 ```
 
 Then open [http://localhost:8080](http://localhost:8080) in your browser.
@@ -165,6 +165,14 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## Changelog
 
+### v2.1.0
+
+- Upgraded Font Awesome from 6.5.1 to 7.3.1, with a Subresource Integrity (SRI) hash on the CDN link
+- Replaced the Notyf library with custom-built toast notifications
+- Fixed HTML escaping so quotes in task descriptions can no longer break out of the edit modal's input attribute
+- Fixed the due-date icon not rendering (it used a Pro-only regular-style icon)
+- Added `.gitignore` to exclude macOS `.DS_Store` files
+
 ### v2.0.0
 
 - Full UI revamp with earth-tone design system (sienna, sage, cream palette)
@@ -178,7 +186,7 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 - Added bulk actions: Mark All Done, Clear Completed
 - Added `min` date constraint on all date inputs to prevent past-date selection
 - Added custom CSS chevron on all `<select>` elements (`appearance: none` + SVG background)
-- Improved responsive layout for tablet (768px), mobile (375px), and small mobile (320px)
+- Improved responsive layout for tablet (768px), mobile (480px), and small mobile (360px)
 - Migrated font from Poppins to Inter
 - Switched localStorage key to `mytasks_todos_v2` (fresh namespace)
 
@@ -196,6 +204,8 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 | --- | ------ | ------------------------------------------------------------------ |
 | 1   | Fixed  | Long task labels overflowed and obscured action buttons            |
 | 2   | Fixed  | Strikethrough style failed to apply correctly on multi-line labels |
+| 3   | Fixed  | Due-date and overdue icons did not render                          |
+| 4   | Fixed  | Quotes in task descriptions could inject HTML into the edit modal  |
 
 ---
 
